@@ -5,7 +5,7 @@ function App() {
 
   // TODO: Dynamic URL
   const callAPI = () => {
-    fetch("http://localhost:8080/testAPI")
+    fetch("http://localhost:8080/users")
       .then((res) => res.text())
       .then((res) => setApiResponse(res));
   };
