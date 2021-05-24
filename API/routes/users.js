@@ -1,55 +1,121 @@
-const { MongoClient } = require("mongodb");
+// const { MongoClient } = require("mongodb");
+// const express = require('express');
+// const router = express.Router();
+
+// const mongoString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_NAME}?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true`;
+// const client = new MongoClient(mongoString);
+
+// /* POST user data */
+// // router.post('/', function(req, res) {
+ 
+// // })
+
+// /* GET users listing. */
+// router.get('/', function(req, res, next) {
+//     // The database to use
+//     const dbName = "users";
+                      
+//   async function run() {
+//       try {
+//           await client.connect();
+//           console.log("Connected correctly to server");
+//           const db = client.db(dbName);
+
+//           const col = db.collection("people");
+          
+//           let personDocument = {
+//               "name": { "first": "Alan", "last": "Turing" },
+//               "birth": new Date(1912, 5, 23), // June 23, 1912                                                                                                                                 
+//               "death": new Date(1954, 5, 7),  // June 7, 1954                                                                                                                                  
+//               "contribs": [ "Turing machine", "Turing test", "Turingery" ],
+//               "views": 1250000
+//           }
+
+//           // Insert a single document, wait for promise so we can read it back
+//           const p = await col.insertOne(personDocument);
+//           // Find one document
+//           const myDoc = await col.findOne();
+//           // Print to the console
+//           console.log(myDoc);
+
+//           } catch (err) {
+//           console.log(err.stack);
+//       }
+  
+//       finally {
+//           await client.close();
+//       }
+//   }
+
+//   run().then(() => {
+//     res.send('Data sent successfully')
+//   }).catch(console.dir);
+// });
+
+// module.exports = router;
+
+const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
-const mongoString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_NAME}?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true`;
-const client = new MongoClient(mongoString);
+const user = require('../models/userSchema');
 
-/* POST user data */
-// router.post('/', function(req, res) {
- 
-// })
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    // The database to use
-    const dbName = "users";
-                      
-  async function run() {
-      try {
-          await client.connect();
-          console.log("Connected correctly to server");
-          const db = client.db(dbName);
-
-          const col = db.collection("people");
-          
-          let personDocument = {
-              "name": { "first": "Alan", "last": "Turing" },
-              "birth": new Date(1912, 5, 23), // June 23, 1912                                                                                                                                 
-              "death": new Date(1954, 5, 7),  // June 7, 1954                                                                                                                                  
-              "contribs": [ "Turing machine", "Turing test", "Turingery" ],
-              "views": 1250000
-          }
-
-          // Insert a single document, wait for promise so we can read it back
-          const p = await col.insertOne(personDocument);
-          // Find one document
-          const myDoc = await col.findOne();
-          // Print to the console
-          console.log(myDoc);
-
-          } catch (err) {
-          console.log(err.stack);
-      }
-  
-      finally {
-          await client.close();
-      }
-  }
-
-  run().then(() => {
-    res.send('Data sent successfully')
-  }).catch(console.dir);
+router.route('/create').post((req, res, next) => {
+    user.create(req.body, (error, data) => {
+        if (error) {
+            return next(error)
+        } else {
+            console.log(data)
+            res.json(data)
+        }
+    })
 });
+
+router.route('/').get((req, res) => {
+    user.find((error, data) => {
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+router.route('/edit/:id').get((req, res) => {
+    user.findById(req.params.id, (error, data) => {
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+
+router.route('/update/:id').put((req, res, next) => {
+    user.findByIdAndUpdate(req.params.id, {
+        $set: req.body
+    }, (error, data) => {
+        if (error) {
+          console.log(error);
+          return next(error);
+        } else {
+            res.json(data)
+            console.log('User updated successfully !')
+        }
+    })
+})
+
+router.route('/delete/:id').delete((req, res, next) => {
+    user.findByIdAndRemove(req.params.id, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.status(200).json({
+                msg: data
+            })
+        }
+    })
+})
 
 module.exports = router;

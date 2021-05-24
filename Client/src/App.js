@@ -1,23 +1,16 @@
-import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import CreateUser from "./components/CreateUser";
+import Users from "./components/Users";
 
 function App() {
-  const [apiResponse, setApiResponse] = useState("");
-
-  // TODO: Dynamic URL
-  const callAPI = () => {
-    fetch("http://localhost:8080/users")
-      .then((res) => res.text())
-      .then((res) => setApiResponse(res));
-  };
-
-  useEffect(() => {
-    callAPI();
-  }, []);
-
   return (
-    <div className="App">
-      <p>{apiResponse}</p>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={CreateUser} />
+        <Route path="/create-user" component={CreateUser} />
+        <Route path="/users" component={Users} />
+      </Switch>
+    </Router>
   );
 }
 
