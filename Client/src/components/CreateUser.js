@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const CreateUser = () => {
@@ -24,7 +24,7 @@ const CreateUser = () => {
     };
 
     axios
-      .post("http://localhost:8080/users/create", userInfo)
+      .post("http://localhost:8080/users", userInfo)
       .then((res) => {
         console.log(res.data);
       })
