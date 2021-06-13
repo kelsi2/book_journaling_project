@@ -7,13 +7,11 @@ const CreateUser = () => {
     email: "",
   });
 
-  const onChangeUserName = (e) => {
-    setUserData((prevState) => ({ ...prevState, name: e.target.value }));
-  };
-
-  const onChangeUserEmail = (e) => {
-    setUserData((prevState) => ({ ...prevState, email: e.target.value }));
-  };
+  const handleChange =
+    (key) =>
+    ({ target: { value } }) => {
+      setUserData({ ...userData, [key]: value });
+    };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +41,7 @@ const CreateUser = () => {
           <input
             type="text"
             value={userData.name}
-            onChange={onChangeUserName}
+            onChange={handleChange("name")}
             className="form-control"
           />
         </div>
@@ -52,7 +50,7 @@ const CreateUser = () => {
           <input
             type="text"
             value={userData.email}
-            onChange={onChangeUserEmail}
+            onChange={handleChange("email")}
             className="form-control"
           />
         </div>
