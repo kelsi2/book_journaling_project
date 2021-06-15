@@ -5,6 +5,7 @@ module.exports = {
   connect: (dbHost) => {
     mongoose.set("useNewUrlParser", true);
     mongoose.set("useUnifiedTopology", true);
+    mongoose.set("useCreateIndex", true);
     mongoose.connect(dbHost);
     mongoose.connection.on("error", (error) => {
       console.error(error);

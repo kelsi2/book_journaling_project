@@ -1,44 +1,25 @@
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const User = require("../models/userSchema");
+
 module.exports = {
   Mutation: {
-    addUser: async (parent, args, { models: userSchema }) => {
-      console.log(userSchema);
-      let { first_name, last_name, email, username, password, profileImage } =
-        args;
-
+    addUser: async (
+      parent,
+      { first_name, last_name, email, username, password },
+      { models }
+    ) => {
       email = email.trim().toLowerCase();
 
-      const user = await userSchema.createUser({
-        first_name,
-        last_name,
-        email,
-        username,
-        password,
-        profileImage,
-      });
+      const hashed = await bcrypt.hash(password, 10);
 
-      return user;
+      const user = { first_name, last_name, email, username, password: hashed };
 
-      // const userObj = new User({
-      //   first_name,
-      //   last_name,
-      //   email,
-      //   username,
-      //   password,
-      //   profileImage,
-      // });
+      const createdUser = await models.User.create(user);
 
-      // // bcrypt.hash(password, 10);
+      console.log(createdUser);
 
-      // return userObj
-      //   .save()
-      //   .then((result) => {
-      //     // jwt.sign({ username }, process.env.JWT_SECRET);
-      //     console.log(userObj);
-      //     return { ...result };
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-      //   });
+      return jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET);
     },
   },
 };

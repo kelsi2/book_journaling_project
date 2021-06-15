@@ -11,7 +11,7 @@ const { ApolloServer, gql } = require("apollo-server-express");
 const db = require("./db");
 const typeDefs = require("./schema");
 const resolvers = require("./resolvers");
-const userSchema = require("./models/userSchema");
+const models = require("./models");
 
 dotenv.config();
 
@@ -25,14 +25,10 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async ({ req }) => {
-    if (req) {
-      return {
-        models: {
-          userSchema,
-        },
-      };
-    }
+  context: () => {
+    return {
+      models,
+    };
   },
 });
 

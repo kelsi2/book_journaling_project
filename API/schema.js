@@ -7,7 +7,6 @@ module.exports = gql`
     last_name: String!
     email: String!
     username: String!
-    password: String!
     profileImage: String
   }
 
@@ -23,6 +22,6 @@ module.exports = gql`
       username: String!
       password: String!
       profileImage: String
-    ): User!
+    ): String!
   }
 `;
