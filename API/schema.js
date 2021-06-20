@@ -26,6 +26,13 @@ module.exports = gql`
     profileImage: String
   }
 
+  type Follower {
+    id: ID!
+    user: User!
+    following_user: User!
+    is_following: Boolean
+  }
+
   type Book {
     id: ID!
     title: String!
@@ -47,6 +54,34 @@ module.exports = gql`
     id: ID!
     review: String!
     rating: Int!
+  }
+
+  type Comment {
+    id: ID!
+    title: String!
+    content: String!
+    user: User!
+    book: Book!
+    comment_category: CommentCategory!
+  }
+
+  type CommentCategory {
+    id: ID!
+    name: String!
+  }
+
+  type List {
+    id: ID!
+    title: String!
+    description: String
+    book: Book
+  }
+
+  type Stat {
+    id: ID!
+    stat: Int!
+    stat_category: StatCategory!
+    user: User!
   }
 
   type StatCategory {
