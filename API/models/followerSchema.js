@@ -9,7 +9,7 @@ const followerSchema = new Schema({
   },
   following_user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Following User",
+    ref: "User",
     required: true,
   },
   is_following: {

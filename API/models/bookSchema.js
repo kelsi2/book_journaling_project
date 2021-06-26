@@ -11,7 +11,7 @@ const bookSchema = new Schema({
     required: true,
   },
   isbn: {
-    type: Int32Array,
+    type: Number,
     required: true,
     unique: true,
   },
@@ -24,11 +24,11 @@ const bookSchema = new Schema({
     required: false,
   },
   pages: {
-    type: Int32Array,
+    type: Number,
     required: false,
   },
   averageRating: {
-    type: Int32Array,
+    type: Number,
     required: false,
   },
   bookCoverImage: {

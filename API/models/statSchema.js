@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const statSchema = new Schema({
   stat: {
-    type: Int32Array,
+    type: Number,
     required: true,
   },
   user: {

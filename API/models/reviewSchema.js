@@ -7,7 +7,7 @@ const reviewSchema = new Schema({
     required: true,
   },
   rating: {
-    type: Int32Array,
+    type: Number,
     required: true,
   },
 });

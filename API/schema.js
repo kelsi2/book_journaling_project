@@ -4,6 +4,7 @@ module.exports = gql`
   type Query {
     getUsers: [User]!
     getUser(id: ID!): User!
+    getBooks: [Book]!
   }
 
   type Mutation {
@@ -14,6 +15,17 @@ module.exports = gql`
       username: String!
       password: String!
       profileImage: String
+    ): String!
+
+    addBook(
+      title: String!
+      author: String!
+      isbn: Int!
+      description: String!
+      publicationDate: String
+      pages: Int
+      averageRating: Int
+      bookCoverImage: String
     ): String!
   }
 
