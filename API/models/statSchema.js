@@ -13,7 +13,7 @@ const statSchema = new Schema({
   },
   stat_category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Stat Category",
+    ref: "StatCategory",
     required: true,
   },
 });

@@ -11,7 +11,7 @@ const bookSchema = new Schema({
     required: true,
   },
   isbn: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },
@@ -32,6 +32,10 @@ const bookSchema = new Schema({
     required: false,
   },
   bookCoverImage: {
+    type: String,
+    required: false,
+  },
+  genre: {
     type: String,
     required: false,
   },

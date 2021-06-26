@@ -1,12 +1,11 @@
 const dotenv = require("dotenv");
 const createError = require("http-errors");
 const express = require("express");
-const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
-const { ApolloServer, gql } = require("apollo-server-express");
+const { ApolloServer } = require("apollo-server-express");
 
 const db = require("./db");
 const typeDefs = require("./schema");

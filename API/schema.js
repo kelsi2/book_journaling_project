@@ -5,6 +5,9 @@ module.exports = gql`
     getUsers: [User]!
     getUser(id: ID!): User!
     getBooks: [Book]!
+    getBook(id: ID!): Book!
+    getGenres: [Genre]!
+    getGenre(id: ID!): Genre!
   }
 
   type Mutation {
@@ -20,13 +23,18 @@ module.exports = gql`
     addBook(
       title: String!
       author: String!
-      isbn: Int!
+      isbn: String!
       description: String!
       publicationDate: String
       pages: Int
-      averageRating: Int
+      averageRating: Float
       bookCoverImage: String
+      genre: String
     ): String!
+
+    addGenre(genre_name: String!): String!
+
+    # addFollower(user: ID!, following_user: ID!, is_following: Boolean): String!
   }
 
   type User {
@@ -49,8 +57,9 @@ module.exports = gql`
     id: ID!
     title: String!
     author: String!
-    isbn: Int!
+    isbn: String!
     description: String!
+    genre: Genre
     publicationDate: String
     pages: Int
     averageRating: Int

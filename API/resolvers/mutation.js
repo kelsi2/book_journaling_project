@@ -19,39 +19,58 @@ module.exports = {
 
       return jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET);
     },
-  },
 
-  // Book mutations
-  addBook: async (
-    parent,
-    {
-      title,
-      author,
-      isbn,
-      description,
-      publicationDate,
-      pages,
-      averageRating,
-      bookCoverImage,
+    // Follower mutations
+    // addFollower: async (
+    //   parent,
+    //   { user, following_user, is_following },
+    //   { models }
+    // ) => {
+    //   const follower = { user, following_user, is_following };
+
+    //   const createdFollower = await models.Follower.create(follower);
+
+    //   return jwt.sign({ id: createdFollower.id }, process.env.JWT_SECRET);
+    // },
+
+    // Book mutations
+    addBook: async (
+      parent,
+      {
+        title,
+        author,
+        isbn,
+        description,
+        publicationDate,
+        pages,
+        averageRating,
+        bookCoverImage,
+        genre,
+      },
+      { models }
+    ) => {
+      const book = {
+        title,
+        author,
+        isbn,
+        description,
+        publicationDate,
+        pages,
+        averageRating,
+        bookCoverImage,
+        genre,
+      };
+
+      const createdBook = await models.Book.create(book);
+      return jwt.sign({ id: createdBook.id }, process.env.JWT_SECRET);
     },
-    { models }
-  ) => {
-    const book = {
-      title,
-      author,
-      isbn,
-      description,
-      publicationDate,
-      pages,
-      averageRating,
-      bookCoverImage,
-    };
-    console.log(book);
 
-    const createdBook = await models.Book.create(book);
+    // Genre mutations
+    addGenre: async (parent, { genre_name }, { models }) => {
+      const genre = { genre_name };
 
-    console.log(createdBook);
-    return "Created";
-    // return jwt.sign({ id: createBook.id }, process.env.JWT_SECRET);
+      const createdGenre = await models.Genre.create(genre);
+      return jwt.sign({ id: createdGenre.id }, process.env.JWT_SECRET);
+    },
   },
 };

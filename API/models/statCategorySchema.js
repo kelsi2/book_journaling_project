@@ -8,6 +8,6 @@ const statCategorySchema = new Schema({
   },
 });
 
-const StatCategory = mongoose.model("Stat Category", statCategorySchema);
+const StatCategory = mongoose.model("Stat_Category", statCategorySchema);
 
 module.exports = StatCategory;

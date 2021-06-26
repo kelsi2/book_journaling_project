@@ -16,7 +16,20 @@ module.exports = {
 
     // Book queries
     getBooks(parent, args, { models }) {
-      return models.Books.find();
+      return models.Book.find();
+    },
+
+    getBook(parent, { id }, { models }) {
+      return models.Book.findById(id).exec();
+    },
+
+    // Genre queries
+    getGenres(parent, args, { models }) {
+      return models.Genre.find();
+    },
+
+    getGenre(parent, { id }, { models }) {
+      return models.Genre.findById(id).exec();
     },
   },
 };
