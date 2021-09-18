@@ -72,5 +72,17 @@ module.exports = {
       const createdGenre = await models.Genre.create(genre);
       return jwt.sign({ id: createdGenre.id }, process.env.JWT_SECRET);
     },
+
+    addReview: async (
+      parent,
+      { review_description, rating, book },
+      { models }
+    ) => {
+      const review = { review_description, rating, book };
+
+      const createdReview = await models.Review.create(review);
+      console.log(createdReview.id);
+      return jwt.sign({ id: createdReview.id }, process.env.JWT_SECRET);
+    },
   },
 };

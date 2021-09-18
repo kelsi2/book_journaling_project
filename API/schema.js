@@ -8,6 +8,8 @@ module.exports = gql`
     getBook(id: ID!): Book!
     getGenres: [Genre]!
     getGenre(id: ID!): Genre!
+    getReviews: [Review]!
+    getReview(id: ID!): Review!
   }
 
   type Mutation {
@@ -33,6 +35,12 @@ module.exports = gql`
     ): String!
 
     addGenre(genre_name: String!): String!
+
+    addReview(
+      book: ID!
+      review_description: String!
+      rating: Float!
+    ): String!
 
     # addFollower(user: ID!, following_user: ID!, is_following: Boolean): String!
   }
@@ -73,8 +81,9 @@ module.exports = gql`
 
   type Review {
     id: ID!
-    review: String!
-    rating: Int!
+    book: Book!
+    review_description: String!
+    rating: Float!
   }
 
   type Comment {

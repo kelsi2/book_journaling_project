@@ -31,5 +31,14 @@ module.exports = {
     getGenre(parent, { id }, { models }) {
       return models.Genre.findById(id).exec();
     },
+
+    // Review queries
+    getReviews(parent, args, { models }) {
+      return models.Review.find().populate('book');
+    },
+
+    getReview(parent, { id }, { models }) {
+      return models.Review.findById(id).exec();
+    },
   },
 };
