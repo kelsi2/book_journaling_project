@@ -34,11 +34,11 @@ module.exports = {
 
     // Review queries
     getReviews(parent, args, { models }) {
-      return models.Review.find().populate('book');
+      return models.Review.find().populate('book').exec();
     },
 
     getReview(parent, { id }, { models }) {
-      return models.Review.findById(id).exec();
+      return models.Review.findById(id).populate('book').exec();
     },
   },
 };
