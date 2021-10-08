@@ -41,8 +41,6 @@ module.exports = gql`
       review_description: String!
       rating: Float!
     ): String!
-
-    # addFollower(user: ID!, following_user: ID!, is_following: Boolean): String!
   }
 
   type User {

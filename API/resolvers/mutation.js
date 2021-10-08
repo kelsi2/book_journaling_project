@@ -20,19 +20,6 @@ module.exports = {
       return jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET);
     },
 
-    // Follower mutations
-    // addFollower: async (
-    //   parent,
-    //   { user, following_user, is_following },
-    //   { models }
-    // ) => {
-    //   const follower = { user, following_user, is_following };
-
-    //   const createdFollower = await models.Follower.create(follower);
-
-    //   return jwt.sign({ id: createdFollower.id }, process.env.JWT_SECRET);
-    // },
-
     // Book mutations
     addBook: async (
       parent,
@@ -73,6 +60,7 @@ module.exports = {
       return jwt.sign({ id: createdGenre.id }, process.env.JWT_SECRET);
     },
 
+    // Review mutations
     addReview: async (
       parent,
       { review_description, rating, book },

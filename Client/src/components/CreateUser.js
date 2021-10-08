@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 
 const CreateUser = () => {
   const [userData, setUserData] = useState({
@@ -16,21 +16,21 @@ const CreateUser = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const userInfo = {
-      name: userData.name,
-      email: userData.email,
-    };
+    // const userInfo = {
+    //   name: userData.name,
+    //   email: userData.email,
+    // };
 
-    axios
-      .post("http://localhost:8080/users", userInfo)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // axios
+    //   .post("http://localhost:8080/users", userInfo)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
 
-    setUserData({ name: "", email: "" });
+    // setUserData({ name: "", email: "" });
   };
 
   return (
