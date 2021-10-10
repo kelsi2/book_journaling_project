@@ -1,5 +1,4 @@
 const DataTable = (props) => {
-  console.log('props', props)
   return (
     <tr>
       <td>{props.obj.id}</td>
