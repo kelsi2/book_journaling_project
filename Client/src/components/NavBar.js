@@ -1,9 +1,14 @@
 import React from "react";
-import { AppBar, Button, Box } from "@mui/material";
-import "../styles/navbarStyles.css";
+import { Link, useHistory } from "react-router-dom";
+import { AppBar, Button } from "@mui/material";
 import GlobalStyles from "../assets/GlobalStyles";
 
 const NavBar = () => {
+  const history = useHistory();
+
+  const AUTH_TOKEN = process.env.AUTH_TOKEN;
+  const authToken = localStorage.getItem(AUTH_TOKEN);
+
   return (
     <AppBar
       m={1}
@@ -16,28 +21,53 @@ const NavBar = () => {
       }}
     >
       <div style={{ display: "flex" }}>
-        <Button
-          className="btn"
-          style={{
-            background: GlobalStyles.pewterBlue,
-            color: GlobalStyles.isabelline,
-            marginRight: "10px",
-          }}
-          variant="contained"
-        >
-          Sign Up
-        </Button>
-        <Button
-          className="btn"
-          style={{
-            background: GlobalStyles.pewterBlue,
-            color: GlobalStyles.isabelline,
-            marginRight: "10px",
-          }}
-          variant="contained"
-        >
-          Login
-        </Button>
+        {authToken ? (
+          <Button
+            style={{
+              background: GlobalStyles.pewterBlue,
+              color: GlobalStyles.isabelline,
+              marginRight: "10px",
+              padding: "10px 15px",
+              borderRadius: "10px",
+              textDecoration: "none",
+            }}
+            onClick={() => {
+              localStorage.removeItem(AUTH_TOKEN);
+              history.push("/");
+            }}
+          >
+            Logout
+          </Button>
+        ) : (
+          <div>
+            <Link
+              to="/login"
+              style={{
+                background: GlobalStyles.pewterBlue,
+                color: GlobalStyles.isabelline,
+                marginRight: "10px",
+                padding: "10px 15px",
+                borderRadius: "10px",
+                textDecoration: "none",
+              }}
+            >
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              style={{
+                background: GlobalStyles.pewterBlue,
+                color: GlobalStyles.isabelline,
+                marginRight: "10px",
+                padding: "10px 15px",
+                borderRadius: "10px",
+                textDecoration: "none",
+              }}
+            >
+              Sign Up
+            </Link>
+          </div>
+        )}
       </div>
     </AppBar>
   );
