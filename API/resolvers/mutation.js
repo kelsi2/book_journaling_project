@@ -17,7 +17,12 @@ module.exports = {
 
       const createdUser = await models.User.create(user);
 
-      return jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET);
+
+      return {
+        token,
+        user
+      }
     },
 
   login: async(parent, { email, password }, { models }) => {

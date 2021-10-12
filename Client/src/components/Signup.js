@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useMutation, gql } from "@apollo/client";
 import GlobalStyles from "../assets/GlobalStyles";
 
@@ -17,12 +17,21 @@ const ADD_USER = gql`
       email: $email
       username: $username
       password: $password
-    )
+    ) {
+      token
+    }
   }
 `;
 
 const Signup = () => {
-  const [addUser, { loading, error, data }] = useMutation(ADD_USER);
+  const [addUser, { loading, error, data }] = useMutation(ADD_USER, {
+    onCompleted(data) {
+      localStorage.setItem("AUTH_TOKEN", data.addUser.token);
+      history.push("/");
+    },
+  });
+
+  const history = useHistory();
 
   const [formState, setFormState] = useState({
     first_name: "",
@@ -34,7 +43,9 @@ const Signup = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await addUser({ variables: { ...formState } });
+    await addUser({
+      variables: { ...formState },
+    });
     setFormState({
       first_name: "",
       last_name: "",
@@ -114,7 +125,7 @@ const Signup = () => {
             borderRadius: "10px",
             textDecoration: "none",
             border: "none",
-            fontSize: "inherit"
+            fontSize: "inherit",
           }}
           onClick={onSubmit}
         >

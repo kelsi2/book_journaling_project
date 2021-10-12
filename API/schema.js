@@ -20,7 +20,7 @@ module.exports = gql`
       username: String!
       password: String!
       profileImage: String
-    ): String!
+    ): AuthPayload
 
     login(email: String!, password: String!): AuthPayload
 

@@ -3,8 +3,23 @@ import { useHistory, Link } from "react-router-dom";
 import { useMutation, gql } from "@apollo/client";
 import GlobalStyles from "../assets/GlobalStyles";
 
+const LOGIN = gql`
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+    }
+  }
+`;
+
 const Login = () => {
-  const [login, { loading, error, data }] = useMutation(LOGIN);
+  const [login, { loading, error, data }] = useMutation(LOGIN, {
+    onCompleted(data) {
+      localStorage.setItem("AUTH_TOKEN", data.login.token);
+      history.push("/");
+    },
+  });
+
+  const history = useHistory();
 
   const [formState, setFormState] = useState({
     email: "",
@@ -13,7 +28,9 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await login({ variables: { ...formState } });
+    await login({
+      variables: { ...formState },
+    });
     setFormState({
       email: "",
       password: "",
@@ -59,7 +76,7 @@ const Login = () => {
             border: "none",
             fontSize: "inherit",
           }}
-          onClick={() => console.log("onClick")}
+          onClick={onSubmit}
         >
           Login
         </button>

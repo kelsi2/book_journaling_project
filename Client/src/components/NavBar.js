@@ -6,8 +6,7 @@ import GlobalStyles from "../assets/GlobalStyles";
 const NavBar = () => {
   const history = useHistory();
 
-  const AUTH_TOKEN = process.env.AUTH_TOKEN;
-  const authToken = localStorage.getItem(AUTH_TOKEN);
+  const authToken = localStorage.getItem("AUTH_TOKEN");
 
   return (
     <AppBar
@@ -32,7 +31,7 @@ const NavBar = () => {
               textDecoration: "none",
             }}
             onClick={() => {
-              localStorage.removeItem(AUTH_TOKEN);
+              localStorage.removeItem("AUTH_TOKEN");
               history.push("/");
             }}
           >
