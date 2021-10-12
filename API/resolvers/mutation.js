@@ -20,6 +20,29 @@ module.exports = {
       return jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET);
     },
 
+  login: async(parent, { email, password }, { models }) => {
+    email = email.trim().toLowerCase();
+
+    const user = await models.User.findOne({ email })
+
+    if (!user) {
+      throw new Error('No user found')
+    }
+
+    const valid = await bcrypt.compare(password, user.password)
+
+    if (!valid) {
+      throw new Error('Invalid password')
+    }
+
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET)
+
+    return {
+      token,
+      user
+    }
+  },
+
     // Book mutations
     addBook: async (
       parent,

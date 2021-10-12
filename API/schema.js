@@ -22,6 +22,8 @@ module.exports = gql`
       profileImage: String
     ): String!
 
+    login(email: String!, password: String!): AuthPayload
+
     addBook(
       title: String!
       author: String!
@@ -36,11 +38,7 @@ module.exports = gql`
 
     addGenre(genre_name: String!): String!
 
-    addReview(
-      book: ID!
-      review_description: String!
-      rating: Float!
-    ): String!
+    addReview(book: ID!, review_description: String!, rating: Float!): String!
   }
 
   type User {
@@ -50,6 +48,11 @@ module.exports = gql`
     email: String!
     username: String!
     profileImage: String
+  }
+
+  type AuthPayload {
+    token: String
+    user: User
   }
 
   type Follower {
