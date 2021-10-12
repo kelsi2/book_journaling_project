@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { useMutation, gql } from "@apollo/client";
 import GlobalStyles from "../assets/GlobalStyles";
+import AuthContext from "../context/AuthContext";
 
 const LOGIN = gql`
   mutation Login($email: String!, $password: String!) {
@@ -15,7 +16,7 @@ const Login = () => {
   const [login, { loading, error, data }] = useMutation(LOGIN, {
     onCompleted(data) {
       localStorage.setItem("AUTH_TOKEN", data.login.token);
-      history.push("/");
+      history.goBack();
     },
   });
 
@@ -26,18 +27,9 @@ const Login = () => {
     password: "",
   });
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    await login({
-      variables: { ...formState },
-    });
-    setFormState({
-      email: "",
-      password: "",
-    });
-  };
-
   return (
+    <AuthContext.Consumer> 
+      {({ loggedIn, setLoggedIn }) => (
     <div>
       <h1>Login</h1>
       <div>
@@ -76,7 +68,17 @@ const Login = () => {
             border: "none",
             fontSize: "inherit",
           }}
-          onClick={onSubmit}
+          onClick={async (e) => {
+            e.preventDefault();
+            await login({
+              variables: { ...formState },
+            });
+            setLoggedIn(true)
+            setFormState({
+              email: "",
+              password: "",
+            });
+          }}
         >
           Login
         </button>
@@ -95,6 +97,8 @@ const Login = () => {
         </Link>
       </div>
     </div>
+    )}
+    </AuthContext.Consumer>
   );
 };
 
