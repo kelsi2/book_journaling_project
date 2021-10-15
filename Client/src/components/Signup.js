@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { useMutation, gql } from "@apollo/client";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import GlobalStyles from "../assets/GlobalStyles";
 import AuthContext from "../context/AuthContext";
 
@@ -25,7 +26,7 @@ const ADD_USER = gql`
 `;
 
 const Signup = () => {
-  const [addUser, { loading, error, data }] = useMutation(ADD_USER, {
+  const [addUser] = useMutation(ADD_USER, {
     onCompleted(data) {
       localStorage.setItem("AUTH_TOKEN", data.addUser.token);
       history.goBack();
@@ -42,95 +43,15 @@ const Signup = () => {
     password: "",
   });
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    await addUser({
-      variables: { ...formState },
-    });
-    setFormState({
-      first_name: "",
-      last_name: "",
-      email: "",
-      username: "",
-      password: "",
-    });
-  };
-
   return (
     <AuthContext.Consumer>
-      {({ loggedIn, setLoggedIn }) => (
+      {({ setLoggedIn }) => (
         <div>
           <h1>Sign Up</h1>
           <div>
-            <input
-              value={formState.first_name}
-              onChange={(e) =>
-                setFormState({
-                  ...formState,
-                  first_name: e.target.value,
-                })
-              }
-              type="text"
-              placeholder="First name"
-            />
-            <input
-              value={formState.last_name}
-              onChange={(e) =>
-                setFormState({
-                  ...formState,
-                  last_name: e.target.value,
-                })
-              }
-              type="text"
-              placeholder="Last name"
-            />
-            <input
-              value={formState.username}
-              onChange={(e) =>
-                setFormState({
-                  ...formState,
-                  username: e.target.value,
-                })
-              }
-              type="text"
-              placeholder="Username"
-            />
-            <input
-              value={formState.email}
-              onChange={(e) =>
-                setFormState({
-                  ...formState,
-                  email: e.target.value,
-                })
-              }
-              type="text"
-              placeholder="Enter your email address"
-            />
-            <input
-              value={formState.password}
-              onChange={(e) =>
-                setFormState({
-                  ...formState,
-                  password: e.target.value,
-                })
-              }
-              type="password"
-              placeholder="Enter your password"
-            />
-          </div>
-          <div>
-            <button
-              style={{
-                background: GlobalStyles.pewterBlue,
-                color: GlobalStyles.isabelline,
-                marginRight: "10px",
-                padding: "10px 15px",
-                borderRadius: "10px",
-                textDecoration: "none",
-                border: "none",
-                fontSize: "inherit",
-              }}
-              onClick={async (e) => {
+            <ValidatorForm
+              onError={(errors) => console.log(errors)}
+              onSubmit={async (e) => {
                 e.preventDefault();
                 await addUser({
                   variables: { ...formState },
@@ -142,10 +63,93 @@ const Signup = () => {
                   email: "",
                   username: "",
                   password: "",
-                })}}
+                });
+              }}
             >
-              Create Account
-            </button>
+              <TextValidator
+                value={formState.first_name}
+                validators={["required"]}
+                errorMessages={["This field is required"]}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    first_name: e.target.value,
+                  })
+                }
+                type="text"
+                placeholder="First name"
+              />
+              <TextValidator
+                value={formState.last_name}
+                validators={["required"]}
+                errorMessages={["This field is required"]}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    last_name: e.target.value,
+                  })
+                }
+                type="text"
+                placeholder="Last name"
+              />
+              <TextValidator
+                value={formState.username}
+                validators={["required"]}
+                errorMessages={["This field is required"]}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    username: e.target.value,
+                  })
+                }
+                type="text"
+                placeholder="Username"
+              />
+              <TextValidator
+                value={formState.email}
+                validators={["required", "isEmail"]}
+                errorMessages={["This field is required", "Email is not valid"]}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    email: e.target.value,
+                  })
+                }
+                type="text"
+                placeholder="Enter your email address"
+              />
+              <TextValidator
+                value={formState.password}
+                validators={["required"]}
+                errorMessages={["This field is required"]}
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    password: e.target.value,
+                  })
+                }
+                type="password"
+                placeholder="Enter your password"
+              />
+              <div>
+                <button
+                  style={{
+                    background: GlobalStyles.pewterBlue,
+                    color: GlobalStyles.isabelline,
+                    marginRight: "10px",
+                    padding: "10px 15px",
+                    borderRadius: "10px",
+                    textDecoration: "none",
+                    border: "none",
+                    fontSize: "inherit",
+                    cursor: "pointer",
+                  }}
+                  type="submit"
+                >
+                  Create Account
+                </button>
+              </div>
+            </ValidatorForm>
             <Link
               to="/login"
               style={{

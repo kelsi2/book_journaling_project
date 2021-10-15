@@ -34,6 +34,7 @@ const NavBar = () => {
                   textDecoration: "none",
                   border: "none",
                   fontSize: "inherit",
+                  cursor: "pointer"
                 }}
                 onClick={() => {
                   localStorage.removeItem("AUTH_TOKEN");
