@@ -32,7 +32,9 @@ const Login = () => {
     <AuthContext.Consumer>
       {({ setLoggedIn }) => (
         <div>
-          <h1>Login</h1>
+          <h1 style={{
+            margin: "10px"
+          }}>Login</h1>
           <div>
             <ValidatorForm
               onError={(errors) => console.log(errors)}
@@ -60,6 +62,9 @@ const Login = () => {
                 }
                 type="text"
                 placeholder="Enter your email address"
+                style={{
+                  margin: "10px",
+                }}
               />
               <TextValidator
                 value={formState.password}
@@ -73,12 +78,16 @@ const Login = () => {
                 }
                 type="password"
                 placeholder="Enter your password"
+                style={{
+                  margin: "10px",
+                }}
               />
               <button
                 style={{
                   background: GlobalStyles.pewterBlue,
                   color: GlobalStyles.isabelline,
-                  marginRight: "10px",
+                  margin: "10px",
+                  marginBottom: "20px",
                   padding: "10px 15px",
                   borderRadius: "10px",
                   textDecoration: "none",
@@ -98,7 +107,7 @@ const Login = () => {
               style={{
                 background: GlobalStyles.pewterBlue,
                 color: GlobalStyles.isabelline,
-                marginRight: "10px",
+                margin: "10px",
                 padding: "10px 15px",
                 borderRadius: "10px",
                 textDecoration: "none",

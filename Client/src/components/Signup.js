@@ -47,7 +47,9 @@ const Signup = () => {
     <AuthContext.Consumer>
       {({ setLoggedIn }) => (
         <div>
-          <h1>Sign Up</h1>
+          <h1 style={{
+            margin: "10px"
+          }}>Sign Up</h1>
           <div>
             <ValidatorForm
               onError={(errors) => console.log(errors)}
@@ -78,6 +80,9 @@ const Signup = () => {
                 }
                 type="text"
                 placeholder="First name"
+                style={{
+                  margin: "10px",
+                }}
               />
               <TextValidator
                 value={formState.last_name}
@@ -91,6 +96,9 @@ const Signup = () => {
                 }
                 type="text"
                 placeholder="Last name"
+                style={{
+                  margin: "10px",
+                }}
               />
               <TextValidator
                 value={formState.username}
@@ -104,6 +112,9 @@ const Signup = () => {
                 }
                 type="text"
                 placeholder="Username"
+                style={{
+                  margin: "10px",
+                }}
               />
               <TextValidator
                 value={formState.email}
@@ -117,6 +128,9 @@ const Signup = () => {
                 }
                 type="text"
                 placeholder="Enter your email address"
+                style={{
+                  margin: "10px",
+                }}
               />
               <TextValidator
                 value={formState.password}
@@ -130,13 +144,17 @@ const Signup = () => {
                 }
                 type="password"
                 placeholder="Enter your password"
+                style={{
+                  margin: "10px",
+                }}
               />
               <div>
                 <button
                   style={{
                     background: GlobalStyles.pewterBlue,
                     color: GlobalStyles.isabelline,
-                    marginRight: "10px",
+                    margin: "10px",
+                    marginBottom: "20px",
                     padding: "10px 15px",
                     borderRadius: "10px",
                     textDecoration: "none",
@@ -155,6 +173,7 @@ const Signup = () => {
               style={{
                 background: GlobalStyles.pewterBlue,
                 color: GlobalStyles.isabelline,
+                margin: "10px",
                 padding: "10px 15px",
                 borderRadius: "10px",
                 textDecoration: "none",
