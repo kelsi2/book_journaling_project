@@ -47,9 +47,13 @@ const Signup = () => {
     <AuthContext.Consumer>
       {({ setLoggedIn }) => (
         <div>
-          <h1 style={{
-            margin: "10px"
-          }}>Sign Up</h1>
+          <h1
+            style={{
+              margin: "10px",
+            }}
+          >
+            Sign Up
+          </h1>
           <div>
             <ValidatorForm
               onError={(errors) => console.log(errors)}
@@ -82,6 +86,7 @@ const Signup = () => {
                 placeholder="First name"
                 style={{
                   margin: "10px",
+                  width: "220px",
                 }}
               />
               <TextValidator
@@ -98,6 +103,7 @@ const Signup = () => {
                 placeholder="Last name"
                 style={{
                   margin: "10px",
+                  width: "220px",
                 }}
               />
               <TextValidator
@@ -114,6 +120,7 @@ const Signup = () => {
                 placeholder="Username"
                 style={{
                   margin: "10px",
+                  width: "220px",
                 }}
               />
               <TextValidator
@@ -130,6 +137,7 @@ const Signup = () => {
                 placeholder="Enter your email address"
                 style={{
                   margin: "10px",
+                  width: "220px",
                 }}
               />
               <TextValidator
@@ -146,6 +154,7 @@ const Signup = () => {
                 placeholder="Enter your password"
                 style={{
                   margin: "10px",
+                  width: "220px",
                 }}
               />
               <div>
@@ -161,6 +170,7 @@ const Signup = () => {
                     border: "none",
                     fontSize: "inherit",
                     cursor: "pointer",
+                    width: "215px",
                   }}
                   type="submit"
                 >

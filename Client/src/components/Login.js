@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { useMutation, gql } from "@apollo/client";
-import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import TextField from "@mui/material/TextField";
 import GlobalStyles from "../assets/GlobalStyles";
 import AuthContext from "../context/AuthContext";
 
@@ -27,21 +27,35 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState(false)
 
   return (
     <AuthContext.Consumer>
       {({ setLoggedIn }) => (
         <div>
-          <h1 style={{
-            margin: "10px"
-          }}>Login</h1>
+          <h1
+            style={{
+              margin: "10px",
+            }}
+          >
+            Login
+          </h1>
           <div>
-            <ValidatorForm
-              onError={(errors) => console.log(errors)}
+            <form
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "15%"
+              }}
               onSubmit={async (e) => {
                 e.preventDefault();
                 await login({
                   variables: { ...formState },
+                }).catch((error) => {
+                  if (error) {
+                    console.log("Error message", error);
+                    setError(error);
+                  }
                 });
                 setLoggedIn(true);
                 setFormState({
@@ -50,10 +64,9 @@ const Login = () => {
                 });
               }}
             >
-              <TextValidator
+              <TextField
                 value={formState.email}
-                validators={["required", "isEmail"]}
-                errorMessages={["This field is required", "Email is not valid"]}
+                error={error ? true : false}
                 onChange={(e) =>
                   setFormState({
                     ...formState,
@@ -66,10 +79,12 @@ const Login = () => {
                   margin: "10px",
                 }}
               />
-              <TextValidator
+              <TextField
                 value={formState.password}
-                validators={["required"]}
-                errorMessages={["This field is required"]}
+                error={error ? true : false}
+                helperText={
+                  error ? error.message : ""
+                }
                 onChange={(e) =>
                   setFormState({
                     ...formState,
@@ -99,7 +114,7 @@ const Login = () => {
               >
                 Login
               </button>
-            </ValidatorForm>
+            </form>
           </div>
           <div>
             <Link
@@ -108,7 +123,7 @@ const Login = () => {
                 background: GlobalStyles.pewterBlue,
                 color: GlobalStyles.isabelline,
                 margin: "10px",
-                padding: "10px 15px",
+                padding: "10px",
                 borderRadius: "10px",
                 textDecoration: "none",
               }}
