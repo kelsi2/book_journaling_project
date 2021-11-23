@@ -2,7 +2,8 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AppBar } from "@mui/material";
 import GlobalStyles from "../assets/GlobalStyles";
-import AuthContext from '../context/AuthContext';
+import AuthContext from "../context/AuthContext";
+import Search from "../components/Search";
 
 const NavBar = () => {
   const history = useHistory();
@@ -18,11 +19,11 @@ const NavBar = () => {
           style={{
             background: GlobalStyles.rosyBrown,
             justifyContent: "center",
-            alignItems: "flex-end",
-            height: "50px",
+            height: "70px",
           }}
         >
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Search />
             {authToken && loggedIn ? (
               <button
                 style={{
@@ -34,7 +35,7 @@ const NavBar = () => {
                   textDecoration: "none",
                   border: "none",
                   fontSize: "inherit",
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
                 onClick={() => {
                   localStorage.removeItem("AUTH_TOKEN");
